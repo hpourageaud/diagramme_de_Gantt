@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Diagramme de Gantt</title>
 <script>
 /** @license
@@ -453,36 +453,42 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
 </script>
 <style>
-:root{--bg:#f5f6f8;--surf:#fff;--ink:#17202a;--mut:#5f6b7a;--line:#dde1e7;--wk:#f0f2f5;--acc:#0f766e;--accink:#fff;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12161c;--surf:#1a2028;--ink:#e8ecf1;--mut:#9aa6b4;--line:#2c3541;--wk:#202833;--acc:#2dd4bf;--accink:#0b1f1c}}
-:root[data-theme="dark"]{--bg:#12161c;--surf:#1a2028;--ink:#e8ecf1;--mut:#9aa6b4;--line:#2c3541;--wk:#202833;--acc:#2dd4bf;--accink:#0b1f1c}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{--ink:#17202a;--mut:#5f6b7a;--line:#dde1e7;--wk:#f0f2f5;--acc:#0f766e;--accink:#fff;color-scheme:light}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.4 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
-main{max-width:1400px;margin:0 auto;padding:20px 16px 40px}
-h1{margin:0;font-size:22px;font-weight:650;letter-spacing:-.01em}
+html,body{background:#fff}
+body{margin:0;color:var(--ink);font:14px/1.4 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+main{max-width:1500px;margin:0 auto;padding:20px 16px 40px}
 .top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:14px}
 .pn{font:inherit;font-size:22px;font-weight:650;color:var(--ink);background:transparent;border:0;border-bottom:1px dashed var(--line);padding:2px 0;min-width:240px}
 .btns{display:flex;flex-wrap:wrap;gap:8px}
-button,.fl{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--surf);color:var(--ink);padding:7px 13px;border-radius:6px}
+button,.fl{font:inherit;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink);padding:7px 13px;border-radius:6px}
 button:hover,.fl:hover{border-color:var(--acc)}
 button.pri{background:var(--acc);color:var(--accink);border-color:var(--acc);font-weight:600}
+button:disabled{opacity:.45;cursor:default}
 button:focus-visible,input:focus-visible,.fl:focus-within{outline:2px solid var(--acc);outline-offset:1px}
+#bs{display:inline-flex;align-items:center;gap:7px}
+#bs.dirty::after{content:"";width:8px;height:8px;border-radius:50%;background:#f59e0b}
+.zg{display:inline-flex;align-items:center;gap:6px}
+.zg button{min-width:34px;padding:7px 0}
+#zl{min-width:44px;text-align:center;color:var(--mut)}
 #st{color:var(--mut);min-height:20px;margin:0 0 10px}
-.wrap{background:var(--surf);border:1px solid var(--line);border-radius:8px;overflow-x:auto}
+.wrap{background:#fff;border:1px solid var(--line);border-radius:8px;overflow-x:auto}
 .g{display:flex;width:max-content;min-width:100%}
-#left{position:sticky;left:0;z-index:3;background:var(--surf);border-right:1px solid var(--line);flex:none}
+#left{position:sticky;left:0;z-index:3;background:#fff;border-right:1px solid var(--line);flex:none}
 #right{flex:1;position:relative}
-.row,.lh{display:grid;grid-template-columns:190px 105px 54px 116px 116px 56px;align-items:center;height:36px;border-bottom:1px solid var(--line);padding:0 4px;gap:4px}
+.row,.lh{display:grid;grid-template-columns:28px 180px 96px 52px 114px 114px 76px 80px;align-items:center;height:36px;border-bottom:1px solid var(--line);padding:0 4px;gap:4px}
 .lh{height:52px;font-weight:600;color:var(--mut);font-size:12.5px;align-items:end;padding-bottom:8px}
-.row input{width:100%;font:inherit;color:var(--ink);background:transparent;border:1px solid transparent;border-radius:4px;padding:3px 5px;height:28px;color-scheme:light dark}
+.row input{width:100%;font:inherit;color:var(--ink);background:transparent;border:1px solid transparent;border-radius:4px;padding:3px 5px;height:28px;color-scheme:light}
 .row input:hover{border-color:var(--line)}
+.row input.cf{border-color:#dc2626}
+.n{text-align:center;color:var(--mut);font-size:12px}
+.mt{color:var(--mut);font-size:12px}
 .row.ph{background:color-mix(in srgb,var(--c) 12%,transparent);font-weight:600}
-.row.ph input{font-weight:650;color:var(--c);grid-column:1/4}
-.pd{grid-column:4/6;color:var(--mut);font-weight:400;font-size:12.5px;padding-left:5px}
-.row button{padding:0;height:26px;border:0;background:transparent;color:var(--mut);font-size:16px}
-.row button:hover{color:var(--ink)}
+.row.ph input{font-weight:650;color:var(--c);grid-column:1/5}
+.pd{grid-column:5/8;color:var(--mut);font-weight:400;font-size:12.5px;padding-left:5px}
+.pa{display:flex;justify-content:center}
+.pa button{width:24px;padding:0;height:26px;border:0;background:transparent;color:var(--mut);font-size:16px}
+.pa button:hover{color:var(--ink)}
 .hd{position:relative;height:52px;border-bottom:1px solid var(--line)}
 .hd span{position:absolute;font-size:11.5px;color:var(--mut);white-space:nowrap}
 .hd .m{top:4px;font-weight:600;color:var(--ink);padding-left:6px;border-left:1px solid var(--line);height:22px}
@@ -492,15 +498,10 @@ button:focus-visible,input:focus-visible,.fl:focus-within{outline:2px solid var(
 .bar{position:absolute;border-radius:4px;overflow:hidden;background:color-mix(in srgb,var(--c) 28%,transparent)}
 .bar i{display:block;height:100%;background:var(--c)}
 .bar.ph{border-radius:2px}
+.ms{position:absolute;width:14px;height:14px;background:var(--c);transform:rotate(45deg);border:2px solid #fff;box-shadow:0 0 0 1px var(--c);z-index:1}
 .pl{position:absolute;font-size:11.5px;color:var(--mut);white-space:nowrap}
 .td{position:absolute;top:0;bottom:0;width:2px;background:#dc2626;z-index:1}
 .empty{padding:60px 24px;color:var(--mut);max-width:420px}
-.pa{display:flex;justify-content:center}
-.pa button{width:24px}
-button:disabled{opacity:.45;cursor:default}
-.zg{display:inline-flex;align-items:center;gap:6px}
-.zg button{min-width:34px;padding:7px 0}
-#zl{min-width:44px;text-align:center;color:var(--mut)}
 @media (max-width:700px){#left{position:static}}
 </style>
 </head>
@@ -509,17 +510,20 @@ button:disabled{opacity:.45;cursor:default}
   <div class="top">
     <input class="pn" id="pn" value="Mon projet" aria-label="Nom du projet">
     <div class="btns">
+      <button id="bs" title="Enregistrer (Ctrl+S)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>Enregistrer</button>
       <label class="fl">Importer un .xlsx<input id="file" type="file" accept=".xlsx" hidden></label>
       <button id="ap">Ajouter une phase</button>
+      <button id="rc" title="Décale les tâches qui commencent avant la fin de leurs prédécesseurs">Recaler les dépendances</button>
       <button id="bt">Masquer le tableau</button>
       <span class="zg"><button id="zo" aria-label="Dézoomer" title="Dézoomer">−</button><span id="zl">100 %</span><button id="zi" aria-label="Zoomer" title="Zoomer">+</button></span>
       <button id="bp" class="pri">Exporter en PDF</button>
-      <button id="bx" class="pri">Exporter en XLSX</button>
+      <button id="bx" class="pri">Exporter en xlsx</button>
     </div>
   </div>
   <p id="st">Renseignez les dates de début et de fin : le diagramme se met à jour automatiquement.</p>
   <div class="wrap"><div class="g"><div id="left"></div><div id="right"></div></div></div>
 </main>
+<script id="data" type="application/json">null</script>
 <script>
 const PAL=['#0f766e','#4f46e5','#b45309','#be185d','#0369a1'];
 const $=id=>document.getElementById(id);
@@ -528,36 +532,44 @@ const D=s=>s?Date.UTC(+s.slice(0,4),+s.slice(5,7)-1,+s.slice(8,10))/864e5:null;
 const iso=d=>new Date(d*864e5).toISOString().slice(0,10);
 const fr=s=>s?s.split('-').reverse().join('/'):'';
 const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
-const T=(t)=>({t,w:'',p:0,s:'',e:''});
-let rows=[],ZS=[.4,.6,.8,1,1.5,2,3],zi=3;
+let nid=1,rows=[],ZS=[.4,.6,.8,1,1.5,2,3],zi=3,hid=false,dl=null,view=null;
+const T=t=>({id:nid++,t,w:'',p:0,s:'',e:'',d:[]});
+const M=t=>({id:nid++,ms:1,t,w:'',s:'',d:[]});
 [1,2,3].forEach(n=>{rows.push({ph:1,t:'Titre Phase '+n});for(let k=1;k<=5;k++)rows.push(T('Tâche '+k))});
-let dl=null,view=null;
 try{window.claude?.use('downloads').then(x=>{dl=x}).catch(()=>{})}catch(e){}
 const say=m=>{$('st').textContent=m};
+const numMap=()=>{let k=0;const m={};rows.forEach(r=>{if(!r.ph)m[r.id]=++k});return m};
+const needDay=(P,S)=>(P.ms||S.ms)?P.b:P.b+1;
 
 function model(){let ci=-1,cur=null;rows.forEach(r=>{if(r.ph){ci++;r._c=PAL[ci%PAL.length];r._k=[];cur=r}else{r._c=PAL[Math.max(ci,0)%PAL.length];cur&&cur._k.push(r)}})}
 function bar(r){
-  if(r.ph){const k=r._k.map(bar).filter(Boolean);if(!k.length)return null;
-    return{a:Math.min(...k.map(x=>x.a)),b:Math.max(...k.map(x=>x.b)),p:k.reduce((s,x)=>s+x.p,0)/k.length}}
+  if(r.ph){const k=r._k.map(bar).filter(Boolean);if(!k.length)return null;const t=k.filter(x=>!x.ms);
+    return{a:Math.min(...k.map(x=>x.a)),b:Math.max(...k.map(x=>x.b)),p:t.length?t.reduce((s,x)=>s+x.p,0)/t.length:0}}
+  if(r.ms){const a=D(r.s);return a==null?null:{a,b:a,p:0,ms:1}}
   const a=D(r.s||r.e),b=D(r.e||r.s);if(a==null)return null;
   return{a:Math.min(a,b),b:Math.max(a,b),p:Math.min(100,Math.max(0,+r.p||0))}}
 
 function drawLeft(){
-  model();
-  $('left').innerHTML='<div class="lh"><span>Tâche</span><span>Attribuée à</span><span>Avanc. %</span><span>Début</span><span>Fin</span><span></span></div>'+
-  rows.map((r,i)=>r.ph?
-   `<div class="row ph" style="--c:${r._c}"><input data-i="${i}" data-f="t" value="${esc(r.t)}" aria-label="Phase"><span class="pd" id="pd${i}"></span><span class="pa"><button data-a="add" data-i="${i}" title="Ajouter une tâche">+</button><button data-a="delph" data-i="${i}" title="Supprimer la phase et ses tâches">×</button></span></div>`:
-   `<div class="row"><input data-i="${i}" data-f="t" value="${esc(r.t)}" aria-label="Tâche"><input data-i="${i}" data-f="w" value="${esc(r.w)}" aria-label="Attribuée à"><input data-i="${i}" data-f="p" type="number" min="0" max="100" value="${r.p}" aria-label="Avancement"><input data-i="${i}" data-f="s" type="date" value="${r.s}" aria-label="Début"><input data-i="${i}" data-f="e" type="date" value="${r.e}" aria-label="Fin"><button data-a="del" data-i="${i}" title="Supprimer">×</button></div>`).join('');
+  model();const N=numMap();
+  $('left').innerHTML='<div class="lh"><span>N°</span><span>Tâche</span><span>Attribuée à</span><span>Avanc. %</span><span>Début</span><span>Fin</span><span>Dépend de</span><span></span></div>'+
+  rows.map((r,i)=>{
+    if(r.ph)return`<div class="row ph" style="--c:${r._c}"><input data-i="${i}" data-f="t" value="${esc(r.t)}" aria-label="Phase"><span class="pd" id="pd${i}"></span><span class="pa"><button data-a="add" data-i="${i}" title="Ajouter une tâche">+</button><button data-a="addm" data-i="${i}" title="Ajouter un jalon">◆</button><button data-a="delph" data-i="${i}" title="Supprimer la phase et son contenu">×</button></span></div>`;
+    const dep=`<input data-i="${i}" data-f="d" value="${esc((r.d||[]).map(id=>N[id]).filter(Boolean).join(', '))}" placeholder="ex. 1, 3" aria-label="Dépend de">`,
+      nm=`<span class="n">${N[r.id]}</span><input data-i="${i}" data-f="t" value="${esc(r.t)}" aria-label="Nom"><input data-i="${i}" data-f="w" value="${esc(r.w)}" aria-label="Attribuée à">`,
+      del=`<span class="pa"><button data-a="del" data-i="${i}" title="Supprimer">×</button></span>`;
+    return r.ms?`<div class="row">${nm}<span class="mt">◆ Jalon</span><input data-i="${i}" data-f="s" type="date" value="${r.s}" aria-label="Date du jalon"><span></span>${dep}${del}</div>`
+      :`<div class="row">${nm}<input data-i="${i}" data-f="p" type="number" min="0" max="100" value="${r.p}" aria-label="Avancement"><input data-i="${i}" data-f="s" type="date" value="${r.s}" aria-label="Début"><input data-i="${i}" data-f="e" type="date" value="${r.e}" aria-label="Fin">${dep}${del}</div>`}).join('');
   drawTL();
 }
 function drawTL(){
-  const bars=rows.map(bar),v=bars.filter(Boolean),R=$('right');
-  rows.forEach((r,i)=>{if(r.ph){const b=bars[i],el=$('pd'+i);if(el)el.textContent=b?fr(iso(b.a))+' – '+fr(iso(b.b)):''}});
+  const bars=rows.map(bar),v=bars.filter(Boolean),R=$('right'),by={};
+  rows.forEach((r,i)=>{if(!r.ph)by[r.id]=i;if(r.ph){const b=bars[i],el=$('pd'+i);if(el)el.textContent=b?fr(iso(b.a))+' – '+fr(iso(b.b)):''}});
+  document.querySelectorAll('input[data-f="d"]').forEach(el=>el.classList.remove('cf'));
   if(!v.length){view=null;R.innerHTML='<div class="empty">Aucune date renseignée pour l’instant. Saisissez un début et une fin sur au moins une tâche pour voir apparaître les barres.</div>';return}
   let from=Math.min(...v.map(x=>x.a))-2,to=Math.max(...v.map(x=>x.b))+4;
   if(to-from<27)to=from+27;
-  const n=to-from+1,dw=(n<=70?26:n<=150?14:8)*ZS[zi],w=n*dw;view={from,to,dw,bars};
-  let h=`<div class="hd" style="width:${w}px">`,ms=from,mk='';
+  const n=to-from+1,dw=(n<=70?26:n<=150?14:8)*ZS[zi],w=n*dw,H=rows.length*36;view={from,to,dw,bars};
+  let h=`<div class="hd" style="width:${w}px">`,ms=from;
   const mkey=d=>{const t=new Date(d*864e5);return t.getUTCFullYear()*12+t.getUTCMonth()};
   for(let d=from;d<=to+1;d++){
     if(d>to||mkey(d)!==mkey(ms)){const t=new Date(ms*864e5);h+=`<span class="m" style="left:${(ms-from)*dw}px;width:${(d-ms)*dw}px">${(d-ms)*dw>70?MOIS[t.getUTCMonth()]+' '+t.getUTCFullYear():''}</span>`;ms=d}
@@ -566,25 +578,45 @@ function drawTL(){
     if(dw>=14)h+=`<span class="d" style="left:${(d-from)*dw}px;width:${dw}px">${dd}</span>`;
     else if(dow===1)h+=`<span class="d" style="left:${(d-from)*dw}px;width:${dw*7}px;text-align:left">${dd}</span>`;
   }
-  h+='</div><div class="bd" style="width:'+w+'px;height:'+rows.length*36+'px">';
+  h+=`</div><div class="bd" style="width:${w}px;height:${H}px">`;
   for(let d=from;d<=to;d++){const dow=new Date(d*864e5).getUTCDay();if(dow===0||dow===6)h+=`<div class="wk" style="left:${(d-from)*dw}px;width:${dw}px"></div>`}
   const today=Math.floor(Date.now()/864e5);if(today>=from&&today<=to)h+=`<div class="td" style="left:${(today-from)*dw+dw/2}px" title="Aujourd’hui"></div>`;
   bars.forEach((b,i)=>{if(!b)return;const r=rows[i],ph=r.ph,x=(b.a-from)*dw,bw=(b.b-b.a+1)*dw;
+    if(b.ms){const cx=(b.a-from+.5)*dw;h+=`<div class="ms" style="--c:${r._c};left:${cx-7}px;top:${i*36+11}px" title="${esc(r.t)} — ${fr(r.s)}"></div><span class="pl" style="left:${cx+13}px;top:${i*36+9}px">${esc(r.t)} · ${fr(r.s)}</span>`;return}
     h+=`<div class="bar${ph?' ph':''}" style="--c:${r._c};left:${x}px;width:${bw}px;top:${i*36+(ph?12:8)}px;height:${ph?12:20}px" title="${esc(r.t)} — ${Math.round(b.p)} %"><i style="width:${b.p}%"></i></div><span class="pl" style="left:${x+bw+5}px;top:${i*36+9}px">${hid?esc(r.t)+' – ':''}${Math.round(b.p)} %</span>`});
-  R.innerHTML=h+'</div>';
+  let sv=`<svg style="position:absolute;left:0;top:0;pointer-events:none" width="${w}" height="${H}">`;const cf=new Set();
+  rows.forEach((r,i)=>{if(r.ph||!bars[i])return;(r.d||[]).forEach(id=>{const j=by[id];if(j==null||j===i||!bars[j])return;
+    const P=bars[j],S=bars[i],x1=P.ms?(P.a-from+.5)*dw+7:(P.b-from+1)*dw,x2=S.ms?(S.a-from+.5)*dw-7:(S.a-from)*dw,y1=j*36+18,y2=i*36+18,bad=S.a<needDay(P,S);
+    if(bad)cf.add(i);const col=bad?'#dc2626':'#5f6b7a';let d;
+    if(x2>=x1+3){const xm=x1+Math.min(6,(x2-x1)/2);d=`M${x1} ${y1}H${xm}V${y2}H${x2}`}
+    else{const ym=j<i?i*36:(i+1)*36;d=`M${x1} ${y1}H${x1+6}V${ym}H${x2-8}V${y2}H${x2}`}
+    sv+=`<path d="${d}" fill="none" stroke="${col}" stroke-width="1.4"/><path d="M${x2} ${y2}l-5 -3.5v7z" fill="${col}"/>`})});
+  R.innerHTML=h+sv+'</svg></div>';
+  document.querySelectorAll('input[data-f="d"]').forEach(el=>el.classList.toggle('cf',cf.has(+el.dataset.i)));
 }
-$('left').addEventListener('change',e=>{const el=e.target,i=el.dataset.i;if(i==null)return;
-  const f=el.dataset.f;rows[i][f]=f==='p'?Math.min(100,Math.max(0,+el.value||0)):el.value;
-  if(f==='p')el.value=rows[i].p;drawTL()});
-$('left').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i;
+$('left').addEventListener('change',e=>{const el=e.target,i=el.dataset.i;if(i==null)return;mark(1);
+  const f=el.dataset.f,r=rows[i];
+  if(f==='d'){const m=numMap(),inv={};Object.keys(m).forEach(id=>inv[m[id]]=+id);
+    r.d=[...new Set((el.value.match(/\d+/g)||[]).map(x=>inv[+x]).filter(id=>id&&id!==r.id))];el.value=r.d.map(id=>m[id]).join(', ')}
+  else{r[f]=f==='p'?Math.min(100,Math.max(0,+el.value||0)):el.value;if(f==='p')el.value=r.p}
+  drawTL()});
+$('left').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i;mark(1);
   const a=b.dataset.a,nx=j=>{while(j<rows.length&&!rows[j].ph)j++;return j};
   if(a==='del')rows.splice(i,1);
-  else if(a==='delph'){const j=nx(i+1);say('Phase « '+rows[i].t+' » supprimée ('+(j-i-1)+' tâche(s)).');rows.splice(i,j-i)}
+  else if(a==='delph'){const j=nx(i+1);say('Phase « '+rows[i].t+' » supprimée ('+(j-i-1)+' élément(s)).');rows.splice(i,j-i)}
+  else if(a==='addm')rows.splice(nx(i+1),0,M('Nouveau jalon'));
   else rows.splice(nx(i+1),0,T('Nouvelle tâche'));
   drawLeft()});
-$('ap').onclick=()=>{rows.push({ph:1,t:'Nouvelle phase'},T('Nouvelle tâche'));drawLeft();say('Phase ajoutée à la fin du tableau.')};
+$('ap').onclick=()=>{rows.push({ph:1,t:'Nouvelle phase'},T('Nouvelle tâche'));mark(1);drawLeft();say('Phase ajoutée à la fin du tableau.')};
+function resched(){const by={};rows.forEach(r=>{if(!r.ph)by[r.id]=r});let ch=0;
+  for(let it=0;it<rows.length;it++){let mv=false;
+    rows.forEach(r=>{if(r.ph||!(r.d||[]).length)return;const b=bar(r);if(!b)return;let need=-1e9;
+      r.d.forEach(id=>{const p=by[id];if(!p||p===r)return;const pb=bar(p);if(pb)need=Math.max(need,needDay(pb,b))});
+      if(need>-1e9&&b.a<need){const sh=need-b.a;r.s=iso(b.a+sh);if(!r.ms)r.e=iso(b.b+sh);mv=true;ch++}});
+    if(!mv)break}
+  return ch}
+$('rc').onclick=()=>{const c=resched();if(c)mark(1);drawLeft();say(c?c+' décalage(s) appliqué(s) pour respecter les dépendances.':'Aucun décalage nécessaire.')};
 const redraw=()=>{const wp=document.querySelector('.wrap'),o=view&&view.dw;drawTL();if(o&&view)wp.scrollLeft*=view.dw/o};
-let hid=false;
 $('bt').onclick=()=>{hid=!hid;$('left').style.display=hid?'none':'';$('bt').textContent=hid?'Afficher le tableau':'Masquer le tableau';redraw()};
 const zoom=d=>{const n=Math.min(ZS.length-1,Math.max(0,zi+d));if(n===zi)return;zi=n;$('zl').textContent=Math.round(ZS[zi]*100)+' %';$('zi').disabled=zi===ZS.length-1;$('zo').disabled=zi===0;redraw()};
 $('zi').onclick=()=>zoom(1);$('zo').onclick=()=>zoom(-1);
@@ -600,13 +632,15 @@ $('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;
       const m=/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})$/.exec(String(v).trim());
       if(m){const y=+m[3]<100?2000+ +m[3]:+m[3];return`${y}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`}
       return/^\d{4}-\d{2}-\d{2}/.test(v)?String(v).slice(0,10):''};
-    const out=[];
+    const out=[],nmap={};let k=0;nid=1;
     for(let n=2;n<=ws.rowCount;n++){const r=ws.getRow(n),t=txt(val(r.getCell(1)));if(!t)continue;
       if(mrg.has(n)||/^(titre\s+)?phase/i.test(t)&&val(r.getCell(4))==null){out.push({ph:1,t});continue}
-      let p=val(r.getCell(3));p=typeof p==='string'?parseFloat(p)||0:+p||0;if(p<=1)p*=100;
-      out.push({t,w:txt(val(r.getCell(2))),p:Math.round(p),s:dt(val(r.getCell(4))),e:dt(val(r.getCell(5)))})}
+      const isM=/jalon/i.test(txt(val(r.getCell(8))));let p=val(r.getCell(3));p=typeof p==='string'?parseFloat(p)||0:+p||0;if(p<=1)p*=100;
+      const s=dt(val(r.getCell(4))),e=dt(val(r.getCell(5))),o=isM?M(t):T(t);o.w=txt(val(r.getCell(2)));o.s=s||e;
+      if(!isM){o.p=Math.round(p);o.e=e}o._d=txt(val(r.getCell(7)));nmap[++k]=o.id;out.push(o)}
     if(!out.length)throw new Error('vide');
-    rows=out;drawLeft();say('« '+f.name+' » importé : '+out.filter(r=>!r.ph).length+' tâches.');
+    out.forEach(o=>{if(o._d!==undefined){o.d=(o._d.match(/\d+/g)||[]).map(x=>nmap[+x]).filter(Boolean);delete o._d}});
+    rows=out;mark(1);drawLeft();say('« '+f.name+' » importé : '+out.filter(r=>!r.ph).length+' lignes.');
   }catch(err){say('Import impossible : vérifiez que le fichier est un .xlsx au format du tableau des tâches.')}
   e.target.value=''};
 
@@ -621,57 +655,107 @@ async function save(name,data){
 
 $('bp').onclick=async()=>{
   if(!view){say('Renseignez d’abord des dates pour générer un diagramme.');return}
-  const doc=new window.jspdf.jsPDF({orientation:'landscape',unit:'mm',format:'a4'}),{from,to,bars}=view,n=to-from+1;
-  const M=10,cw=[58,28,12,19,19],tw=cw.reduce((a,b)=>a+b),X=M+tw+2,TW=297-M-X,dw=TW/n,y0=M+10,ry=y0+11;
-  const rh=Math.min(8,(210-M-ry)/rows.length),bot=ry+rh*rows.length;
-  doc.setFont('helvetica','bold').setFontSize(14).text($('pn').value||'Projet',M,M+4);
-  doc.setFont('helvetica','normal').setFontSize(8).setTextColor(110).text('Diagramme de Gantt – '+new Date().toLocaleDateString('fr-FR'),297-M,M+4,{align:'right'});
-  doc.setTextColor(20);
-  for(let d=from;d<=to;d++){const w=new Date(d*864e5).getUTCDay();if(w===0||w===6){doc.setFillColor(240,242,245).rect(X+(d-from)*dw,ry,dw,bot-ry,'F')}}
-  doc.setFont('helvetica','bold').setFontSize(7.5);
-  let x=M;['Tâche','Attribuée à','%','Début','Fin'].forEach((h,i)=>{doc.text(h,x+1,y0+8);x+=cw[i]});
-  doc.setDrawColor(210).setLineWidth(.2);
-  let ms=from;const mk=d=>{const t=new Date(d*864e5);return t.getUTCFullYear()*12+t.getUTCMonth()};
-  for(let d=from;d<=to+1;d++){
-    if(d>to||mk(d)!==mk(ms)){const t=new Date(ms*864e5),wd=(d-ms)*dw;doc.line(X+(ms-from)*dw,y0,X+(ms-from)*dw,y0+5);
-      if(wd>16)doc.setFontSize(7.5).text(MOIS[t.getUTCMonth()]+' '+t.getUTCFullYear(),X+(ms-from)*dw+1,y0+3.6);ms=d}
-    if(d>to)break;const t=new Date(d*864e5);
-    if(dw>=3||t.getUTCDay()===1)doc.setFont('helvetica','normal').setFontSize(5.5).text(String(t.getUTCDate()),X+(d-from)*dw+dw/2,y0+9,{align:'center'});}
-  doc.line(M,ry,297-M,ry);
-  rows.forEach((r,i)=>{const y=ry+i*rh,b=bars[i],c=rgb(r._c);
-    if(r.ph){doc.setFillColor(...mix(r._c,.12)).rect(M,y,tw,rh,'F')}
-    doc.setDrawColor(225).line(M,y+rh,297-M,y+rh);
-    doc.setFontSize(7.5).setFont('helvetica',r.ph?'bold':'normal').setTextColor(...(r.ph?c:[20,20,20]));
-    const cut=(s,w)=>doc.splitTextToSize(String(s||''),w-2)[0]||'';
-    if(r.ph){doc.text(cut(r.t,cw[0]+cw[1]+cw[2]),M+1,y+rh/2+1.2);
-      if(b)doc.setFont('helvetica','normal').setTextColor(110).text(fr(iso(b.a))+' – '+fr(iso(b.b)),M+cw[0]+cw[1]+cw[2]+1,y+rh/2+1.2)}
-    else{let xx=M;[cut(r.t,cw[0]),cut(r.w,cw[1]),Math.round(r.p)+' %',fr(r.s),fr(r.e)].forEach((s,k)=>{doc.text(s,xx+1,y+rh/2+1.2);xx+=cw[k]})}
-    if(b){const bx=X+(b.a-from)*dw,bw=(b.b-b.a+1)*dw,bh=r.ph?rh*.4:rh*.6,by=y+(rh-bh)/2;
-      doc.setFillColor(...mix(r._c,.3)).roundedRect(bx,by,bw,bh,.8,.8,'F');
-      if(b.p>0)doc.setFillColor(...c).roundedRect(bx,by,Math.max(bw*b.p/100,1.6),bh,.8,.8,'F')}});
+  const doc=new window.jspdf.jsPDF({orientation:'landscape',unit:'mm',format:'a4'}),{from,to,bars}=view,n=to-from+1,N=numMap(),idx={};
+  rows.forEach((r,i)=>{if(!r.ph)idx[r.id]=i});
+  const Mg=10,cw=[7,48,24,10,17,17,12],tw=cw.reduce((a,b)=>a+b),X=Mg+tw+2,TW=297-Mg-X,y0=Mg+10,ry=y0+11,rh=8;
+  const dw=Math.min(8,Math.max(4.2,TW/n)),per=Math.floor(TW/dw+1e-6),SB=Math.ceil(n/per),rpp=Math.floor((210-Mg-ry)/rh),RB=Math.max(1,Math.ceil(rows.length/rpp)),tot=SB*RB,rr=Math.min(rh*.32,dw*.45);
+  const mk=d=>{const t=new Date(d*864e5);return t.getUTCFullYear()*12+t.getUTCMonth()};
+  const cut=(s,w)=>doc.splitTextToSize(String(s||''),w)[0]||'';
+  let pg=0;
+  for(let rb=0;rb<RB;rb++)for(let sb=0;sb<SB;sb++){
+    if(pg++)doc.addPage();
+    const r0=rb*rpp,r1=Math.min(rows.length,r0+rpp),s0=from+sb*per,s1=Math.min(to,s0+per-1),bot=ry+(r1-r0)*rh,tx=d=>X+(d-s0)*dw;
+    doc.setFont('helvetica','bold').setFontSize(14).setTextColor(20).text($('pn').value||'Projet',Mg,Mg+4);
+    doc.setFont('helvetica','normal').setFontSize(8).setTextColor(110).text('Diagramme de Gantt – '+new Date().toLocaleDateString('fr-FR')+' – Page '+pg+' / '+tot,297-Mg,Mg+4,{align:'right'});
+    for(let d=s0;d<=s1;d++){const w=new Date(d*864e5).getUTCDay();if(w===0||w===6)doc.setFillColor(240,242,245).rect(tx(d),ry,dw,bot-ry,'F')}
+    doc.setFont('helvetica','bold').setFontSize(7.5).setTextColor(20);
+    let x=Mg;['N°','Tâche','Attribuée à','%','Début','Fin','Dép.'].forEach((t,i)=>{doc.text(t,x+1,y0+8);x+=cw[i]});
+    doc.setDrawColor(210).setLineWidth(.2);let ms=s0;
+    for(let d=s0;d<=s1+1;d++){
+      if(d>s1||mk(d)!==mk(ms)){const t=new Date(ms*864e5);doc.line(tx(ms),y0,tx(ms),y0+5);if((d-ms)*dw>14)doc.setFont('helvetica','bold').setFontSize(7.5).text(MOIS[t.getUTCMonth()]+' '+t.getUTCFullYear(),tx(ms)+1,y0+3.6);ms=d}
+      if(d>s1)break;const t=new Date(d*864e5);
+      if(dw>=3||t.getUTCDay()===1)doc.setFont('helvetica','normal').setFontSize(5.5).text(String(t.getUTCDate()),tx(d)+dw/2,y0+9,{align:'center'})}
+    doc.line(Mg,ry,297-Mg,ry);
+    for(let i=r0;i<r1;i++){const r=rows[i],b=bars[i],y=ry+(i-r0)*rh,c=rgb(r._c),ty=y+rh/2+1.2;
+      if(r.ph)doc.setFillColor(...mix(r._c,.12)).rect(Mg,y,tw,rh,'F');
+      doc.setDrawColor(225).line(Mg,y+rh,297-Mg,y+rh);
+      doc.setFontSize(7.5).setFont('helvetica',r.ph?'bold':'normal').setTextColor(...(r.ph?c:[20,20,20]));
+      if(r.ph){doc.text(cut(r.t,cw[0]+cw[1]+cw[2]+cw[3]-2),Mg+1,ty);
+        if(b)doc.setFont('helvetica','normal').setTextColor(110).text(fr(iso(b.a))+' – '+fr(iso(b.b)),Mg+cw[0]+cw[1]+cw[2]+cw[3]+1,ty)}
+      else{const cells=[String(N[r.id]),cut(r.t,cw[1]-2),cut(r.w,cw[2]-2),r.ms?'':Math.round(r.p)+' %',fr(r.s),r.ms?'':fr(r.e),(r.d||[]).map(id=>N[id]).filter(Boolean).join(',')];
+        let xx=Mg;cells.forEach((s,k)=>{doc.text(s,xx+1,ty);xx+=cw[k]})}
+      if(b&&b.b>=s0&&b.a<=s1){
+        if(b.ms){const cx=tx(b.a)+dw/2,cy=y+rh/2;doc.setFillColor(...c).triangle(cx-rr,cy,cx,cy-rr,cx+rr,cy,'F').triangle(cx-rr,cy,cx,cy+rr,cx+rr,cy,'F');
+          doc.setFont('helvetica','normal').setFontSize(6.5).setTextColor(60).text(doc.splitTextToSize(r.t,Math.max(12,297-Mg-cx-rr-2))[0],cx+rr+1.5,cy+1)}
+        else{const ca=Math.max(b.a,s0),cb=Math.min(b.b,s1)+1,bh=r.ph?rh*.4:rh*.6,by=y+(rh-bh)/2,pe=Math.min(cb,b.a+(b.b-b.a+1)*b.p/100);
+          doc.setFillColor(...mix(r._c,.3)).roundedRect(tx(ca),by,(cb-ca)*dw,bh,.8,.8,'F');
+          if(pe>ca)doc.setFillColor(...c).roundedRect(tx(ca),by,Math.max((pe-ca)*dw,1),bh,.8,.8,'F')}}}
+    doc.setLineWidth(.25);
+    for(let i=r0;i<r1;i++){const r=rows[i],S=bars[i];if(r.ph||!S)continue;
+      (r.d||[]).forEach(id=>{const j=idx[id],P=bars[j];if(j==null||j<r0||j>=r1||!P)return;
+        const x1=P.ms?tx(P.a)+dw/2+rr:tx(P.b+1),x2=S.ms?tx(S.a)+dw/2-rr:tx(S.a);
+        if(Math.min(x1,x2)<X||Math.max(x1,x2)>X+TW)return;
+        const y1=ry+(j-r0)*rh+rh/2,y2=ry+(i-r0)*rh+rh/2,col=S.a<needDay(P,S)?[220,38,38]:[95,107,122];
+        doc.setDrawColor(...col).setFillColor(...col);
+        if(x2>=x1+1.5){const xm=Math.min(1.5,(x2-x1)/2);doc.lines([[xm,0],[0,y2-y1],[x2-x1-xm,0]],x1,y1)}
+        else{const ym=j<i?y2-rh/2:y2+rh/2;doc.lines([[1.5,0],[0,ym-y1],[x2-2-x1-1.5,0],[0,y2-ym],[2,0]],x1,y1)}
+        doc.triangle(x2,y2,x2-1.4,y2-.9,x2-1.4,y2+.9,'F')})}
+  }
   doc.setTextColor(20);
   await save('gantt-'+slug()+'.pdf',doc.output('blob'))};
 
 $('bx').onclick=async()=>{
-  try{const wb=new ExcelJS.Workbook(),ws=wb.addWorksheet('Tâches'),fill=h=>({type:'pattern',pattern:'solid',fgColor:{argb:'FF'+h}});
-    const hr=ws.addRow(['TÂCHE','ATTRIBUÉE À','AVANCEMENT (en %)','DÉBUT','FIN']);hr.font={bold:true};hr.fill=fill('E5E7EB');
+  try{const wb=new ExcelJS.Workbook(),ws=wb.addWorksheet('Tâches'),fill=h=>({type:'pattern',pattern:'solid',fgColor:{argb:'FF'+h}}),N=numMap();
+    const hr=ws.addRow(['TÂCHE','ATTRIBUÉE À','AVANCEMENT (en %)','DÉBUT','FIN','N°','DÉPEND DE','TYPE']);hr.font={bold:true};hr.fill=fill('E5E7EB');
     rows.forEach(r=>{if(r.ph){const x=ws.addRow([r.t]);ws.mergeCells(x.number,1,x.number,5);x.font={bold:true,color:{argb:'FF'+r._c.slice(1).toUpperCase()}};x.fill=fill(hex(mix(r._c,.15)))}
-      else{const x=ws.addRow([r.t,r.w,(+r.p||0)/100,r.s?new Date(D(r.s)*864e5):null,r.e?new Date(D(r.e)*864e5):null]);x.getCell(3).numFmt='0%';x.getCell(4).numFmt='d/m/yy';x.getCell(5).numFmt='d/m/yy'}});
-    [34,18,20,12,12].forEach((w,i)=>ws.getColumn(i+1).width=w);
+      else{const dd=r.s?new Date(D(r.s)*864e5):null,x=ws.addRow([r.t,r.w,r.ms?null:(+r.p||0)/100,dd,r.ms?dd:(r.e?new Date(D(r.e)*864e5):null),N[r.id],(r.d||[]).map(id=>N[id]).filter(Boolean).join(', '),r.ms?'Jalon':'Tâche']);
+        x.getCell(3).numFmt='0%';x.getCell(4).numFmt='d/m/yy';x.getCell(5).numFmt='d/m/yy'}});
+    [34,18,20,12,12,6,14,10].forEach((w,i)=>ws.getColumn(i+1).width=w);
     if(view){const g=wb.addWorksheet('Gantt'),{from,to,bars}=view;g.getColumn(1).width=32;
       const h1=g.getRow(1),h2=g.getRow(2);h1.getCell(1).value=$('pn').value||'Projet';h1.getCell(1).font={bold:true};h2.getCell(1).value='Tâche';h2.getCell(1).font={bold:true};
       let ms=from;const mk=d=>{const t=new Date(d*864e5);return t.getUTCFullYear()*12+t.getUTCMonth()};
       for(let d=from;d<=to+1;d++){
         if(d>to||mk(d)!==mk(ms)){const t=new Date(ms*864e5);h1.getCell(ms-from+2).value=MOIS[t.getUTCMonth()]+' '+t.getUTCFullYear();h1.getCell(ms-from+2).font={bold:true};if(d-1>ms)g.mergeCells(1,ms-from+2,1,d-from+1);ms=d}
-        if(d>to)break;const c=g.getColumn(d-from+2);c.width=3.2;const t=new Date(d*864e5),k=h2.getCell(d-from+2);
+        if(d>to)break;g.getColumn(d-from+2).width=3.2;const t=new Date(d*864e5),k=h2.getCell(d-from+2);
         k.value=t.getUTCDate();k.alignment={horizontal:'center'};k.font={size:8};if([0,6].includes(t.getUTCDay()))k.fill=fill('E5E7EB')}
-      rows.forEach((r,i)=>{const x=g.getRow(i+3),b=bars[i];x.getCell(1).value=r.t;if(r.ph)x.getCell(1).font={bold:true};
+      rows.forEach((r,i)=>{const x=g.getRow(i+3),b=bars[i];x.getCell(1).value=(r.ph?'':N[r.id]+'. ')+r.t;if(r.ph)x.getCell(1).font={bold:true};
         for(let d=from;d<=to;d++){const w=new Date(d*864e5).getUTCDay();if(w===0||w===6)x.getCell(d-from+2).fill=fill('F3F4F6')}
-        if(b){const len=b.b-b.a+1;for(let d=b.a;d<=b.b;d++)x.getCell(d-from+2).fill=fill(d-b.a<len*b.p/100?r._c.slice(1).toUpperCase():hex(mix(r._c,.3)))}});
+        if(b){const len=b.b-b.a+1,dk=r._c.slice(1).toUpperCase();
+          if(b.ms){const c=x.getCell(b.a-from+2);c.fill=fill(dk);c.value='◆';c.font={color:{argb:'FFFFFFFF'},size:8};c.alignment={horizontal:'center'}}
+          else for(let d=b.a;d<=b.b;d++)x.getCell(d-from+2).fill=fill(d-b.a<len*b.p/100?dk:hex(mix(r._c,.3)))}});
       g.views=[{state:'frozen',xSplit:1,ySplit:2}]}
     await save('gantt-'+slug()+'.xlsx',await wb.xlsx.writeBuffer())
   }catch(e){say('Échec de la création du fichier xlsx.')}};
 
+/* ---------- Enregistrer ---------- */
+const ST0='Renseignez les dates de début et de fin : le diagramme se met à jour automatiquement.';
+let fh=null,dirty=false;
+function mark(d){dirty=!!d;$('bs').classList.toggle('dirty',dirty)}
+$('pn').oninput=()=>mark(1);
+addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
+addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();saveHTML()}});
+function snapshot(){
+  const c=document.documentElement.cloneNode(true),q=x=>c.querySelector(x);
+  q('#left').innerHTML='';q('#left').removeAttribute('style');q('#right').innerHTML='';
+  q('#pn').setAttribute('value',$('pn').value);
+  q('#bt').textContent='Masquer le tableau';q('#zl').textContent='100 %';
+  ['#zo','#zi'].forEach(x=>q(x).removeAttribute('disabled'));
+  q('#st').textContent=ST0;q('#bs').classList.remove('dirty');
+  const clean=rows.map(r=>r.ph?{ph:1,t:r.t}:{id:r.id,ms:r.ms?1:0,t:r.t,w:r.w,p:r.p,s:r.s,e:r.e,d:r.d||[]});
+  q('#data').textContent=JSON.stringify({name:$('pn').value,rows:clean}).replace(/</g,'\\u003c');
+  return '<!DOCTYPE html>\n'+c.outerHTML}
+async function saveHTML(){
+  const blob=new Blob([snapshot()],{type:'text/html'}),name='gantt-'+slug()+'.html',hm=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  try{
+    if(window.showSaveFilePicker&&window.top===window){
+      if(!fh)fh=await window.showSaveFilePicker({suggestedName:name,types:[{description:'Page HTML',accept:{'text/html':['.html']}}]});
+      const w=await fh.createWritable();await w.write(blob);await w.close();
+      say('Enregistré dans « '+fh.name+' » à '+hm+'.');mark(0)}
+    else{await save(name,blob);mark(0)}
+  }catch(e){if(e&&e.name==='AbortError')say('Enregistrement annulé.');else{fh=null;say('Échec de l’enregistrement.')}}}
+$('bs').onclick=saveHTML;
+try{const sv=JSON.parse($('data').textContent);if(sv&&sv.rows){rows=sv.rows;$('pn').value=sv.name||'';
+  nid=rows.reduce((m,r)=>Math.max(m,r.id||0),0)+1;rows.forEach(r=>{if(!r.ph){if(!r.id)r.id=nid++;r.d=r.d||[]}})}}catch(e){}
 drawLeft();
 </script>
 </body>
